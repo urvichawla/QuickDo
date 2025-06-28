@@ -170,14 +170,12 @@ function saveUserData() {
             try {
                 window.location.href = 'app.html';
             } catch (error) {
-                console.error('Redirect failed:', error);
                 window.location.replace('app.html');
             }
         }, 1500);
         
         console.log('User data saved:', userData);
     } catch (error) {
-        console.error('Error saving user data:', error);
         window.isSavingUserData = false;
         showAlert('error', 'Failed to save user data. Please try again.', 'Registration Error');
     }
