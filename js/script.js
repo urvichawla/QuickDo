@@ -69,7 +69,7 @@ function showAlert(type, message, title) {
     } else if (type === 'error') {
         const errorAlert = document.getElementById('errorAlert');
         errorAlert.querySelector('h2').textContent = title || 'Age verification failed';
-        errorAlert.querySelector('section').textContent = message || 'You must be at least 10 years old to use this application.';
+        errorAlert.querySelector('section').textContent = message || 'You must be above 10 years old to use this application.';
         errorAlert.style.display = 'block';
         
        
@@ -119,8 +119,8 @@ function validateForm() {
         showDialog = true;
     } else {
         const age = calculateAge(dob);
-        if (age < 10) {
-            showAlert('error', `You are ${age} years old. You must be at least 10 years old to use this application.`, 'Age verification failed');
+        if (age <= 10) {
+            showAlert('error', `You are ${age} years old. You must be above 10 years old to use this application.`, 'Age verification failed');
             isValid = false;
         }
     }
@@ -203,8 +203,8 @@ function addInputValidation() {
             dobError.style.display = 'block';
         } else {
             const age = calculateAge(this.value);
-            if (age < 10) {
-                showAlert('error', `You are ${age} years old. You must be at least 10 years old to use this application.`, 'Age verification failed');
+            if (age <= 10) {
+                showAlert('error', `You are ${age} years old. You must be above 10 years old to use this application.`, 'Age verification failed');
             } else {
                 document.getElementById('dobError').style.display = 'none';
                 document.getElementById('ageError').style.display = 'none';
@@ -221,7 +221,7 @@ function addInputValidation() {
     dobInput.addEventListener('input', function() {
         if (this.value !== '') {
             const age = calculateAge(this.value);
-            if (age >= 10) {
+            if (age > 10) {
                 document.getElementById('dobError').style.display = 'none';
                 document.getElementById('ageError').style.display = 'none';
             }
