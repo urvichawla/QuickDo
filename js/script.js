@@ -59,7 +59,7 @@ function showAlert(type, message, title) {
     if (type === 'success') {
         const successAlert = document.getElementById('successAlert');
         successAlert.querySelector('h2').textContent = title || 'Success! Age verification passed';
-        successAlert.querySelector('section').textContent = message || 'You are eligible to use Taskify. Welcome aboard!';
+        successAlert.querySelector('section').textContent = message || 'You are eligible to use TaskFlow. Welcome aboard!';
         successAlert.style.display = 'block';
         
        
