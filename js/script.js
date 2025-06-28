@@ -120,9 +120,6 @@ function validateForm() {
     } else {
         const age = calculateAge(dob);
         if (age < 10) {
-            const ageError = document.getElementById('ageError');
-            ageError.style.display = 'block';
-            ageError.style.animation = 'shake 0.5s ease-in-out';
             showAlert('error', `You are ${age} years old. You must be at least 10 years old to use this application.`, 'Age verification failed');
             isValid = false;
         }
@@ -138,7 +135,6 @@ function validateForm() {
 function saveUserData() {
     console.log('saveUserData called');
     
-   
     if (window.isSavingUserData) {
         console.log('Already saving user data, ignoring duplicate call');
         return;
@@ -160,8 +156,6 @@ function saveUserData() {
         localStorage.setItem('todoUserData', JSON.stringify(userData));
         console.log('User data saved to localStorage');
         
-        showAlert('success', `Great! You are ${age} years old and eligible to use QuickDo.`, 'Age verification passed');
-        
         const successMessage = document.getElementById('successMessage');
         successMessage.style.display = 'block';
         successMessage.style.animation = 'fadeIn 0.5s ease-out';
@@ -170,17 +164,16 @@ function saveUserData() {
         const registerBtn = document.getElementById('registerBtn');
         registerBtn.classList.add('loading');
         registerBtn.textContent = 'Setting up your account...';
-      
+        
         setTimeout(() => {
             console.log('Redirecting to app.html');
             try {
                 window.location.href = 'app.html';
             } catch (error) {
                 console.error('Redirect failed:', error);
-                
                 window.location.replace('app.html');
             }
-        }, 2000);
+        }, 1500);
         
         console.log('User data saved:', userData);
     } catch (error) {
@@ -211,13 +204,10 @@ function addInputValidation() {
         } else {
             const age = calculateAge(this.value);
             if (age < 10) {
-                const ageError = document.getElementById('ageError');
-                ageError.style.display = 'block';
                 showAlert('error', `You are ${age} years old. You must be at least 10 years old to use this application.`, 'Age verification failed');
             } else {
                 document.getElementById('dobError').style.display = 'none';
                 document.getElementById('ageError').style.display = 'none';
-                showAlert('success', `Great! You are ${age} years old and eligible to use Taskify.`, 'Age verification passed');
             }
         }
     });
