@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickDo - Todo Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.2.7/dist/basecoat.cdn.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.2.7/dist/js/all.min.js" defer></script>
+    <link rel="stylesheet" href="css/app.css">
+ 
+</head>
+<body>
+    <div class="app-container">
+   
+        <div class="header">
+            <div class="user-profile">
+                <img id="userAvatar" class="user-avatar" alt="User Avatar" src="">
+                <div class="user-info">
+                    <h2 id="userName"></h2>
+                    <p>Welcome to your task manager</p>
+                </div>
+            </div>
+            <button class="btn-outline" onclick="logout()">Sign Out</button>
+        </div>
+
+        
+        <div class="stages-container">
+            <div class="stage-tab active" onclick="switchStage('todo')">
+                <div class="stage-count" id="todoCount">0</div>
+                <div class="stage-name">Todo</div>
+            </div>
+            <div class="stage-tab" onclick="switchStage('completed')">
+                <div class="stage-count" id="completedCount">0</div>
+                <div class="stage-name">Completed</div>
+            </div>
+            <div class="stage-tab" onclick="switchStage('archived')">
+                <div class="stage-count" id="archivedCount">0</div>
+                <div class="stage-name">Archived</div>
+            </div>
+        </div>
+
+       
+        <div class="task-input-section">
+            <h3>Add New Task</h3>
+            <div class="task-input-container">
+                <input type="text" id="taskInput" class="task-input" placeholder="Enter your task here..." onkeypress="handleTaskInput(event)">
+                <button class="btn" onclick="addTask()">Add Task</button>
+            </div>
+        </div>
+
+      
+        <div class="search-filter-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search tasks..." onkeyup="filterTasks()">
+                <button class="btn-outline" onclick="clearSearch()">Clear</button>
+            </div>
+            <div class="filter-container">
+                <select id="sortFilter" class="filter-select" onchange="filterTasks()">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="alphabetical">Alphabetical</option>
+                </select>
+                <select id="dateFilter" class="filter-select" onchange="filterTasks()">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+            </div>
+        </div>
+
+       
+        <div class="tasks-container">
+            <div id="tasksList">
+                <!-- Tasks will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

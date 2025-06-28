@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskify - Welcome</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.2.7/dist/basecoat.cdn.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.2.7/dist/js/all.min.js" defer></script>
+    <link rel="stylesheet" href="css/styles.css">
+  
+</head>
+<body>
+    <div class="container">
+        <div class="toggle-bar-container">
+            <button
+                type="button"
+                aria-label="Toggle dark mode"
+                data-tooltip="Toggle dark mode"
+                data-side="bottom"
+                onclick="toggleTheme()"
+                class="btn-icon-outline size-8"
+            >
+                <span class="hidden dark:block">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
+                </span>
+                <span class="block dark:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
+                </span>
+            </button>
+        </div>
+        <div class="hero-section">
+            <h1 class="main-title theme-heading">Welcome to QuickDo</h1>
+            <p class="subtitle theme-heading">Your personal task management companion</p>
+        </div>
+        
+        <div class="card w-full">
+            <header>
+                <h2>Please verify your identity</h2>
+                <p>Enter your details to get started</p>
+            </header>
+            <section>
+                <form class="form grid gap-6" id="registrationForm">
+                    <div class="grid gap-2">
+                        <label for="userName">Full Name</label>
+                        <input type="text" id="userName" required>
+                        <div class="error-message" id="nameError">Please enter your full name</div>
+                    </div>
+                    <div class="grid gap-2">
+                        <label for="userDob">Date of Birth</label>
+                        <input type="date" id="userDob" required>
+                        <div class="error-message" id="dobError">Please enter your date of birth</div>
+                        <div class="error-message" id="ageError">You must be at least 10 years old to use this app</div>
+                    </div>
+                </form>
+            </section>
+            <footer class="flex flex-col items-center gap-2">
+                <button type="button" class="btn w-full" id="registerBtn">Get Started</button>
+                <div class="success-message" id="successMessage">Registration successful! Redirecting...</div>
+            </footer>
+        </div>
+        
+      
+        <div class="alert" id="successAlert" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+            <h2>Success! Age verification passed</h2>
+            <section>You are eligible to use Taskify. Welcome aboard!</section>
+        </div>
+        
+       
+        <div class="alert" id="errorAlert" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M15 9l-6 6" /><path d="M9 9l6 6" /></svg>
+            <h2>Age verification failed</h2>
+            <section>You must be at least 10 years old to use this application.</section>
+        </div>
+    </div>
+
+    <div class="alert" id="formAlert" style="display:none; position:fixed; top:32px; left:50%; transform:translateX(-50%); z-index:1000; min-width:320px; max-width:400px; width:auto; box-sizing:border-box;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+        <h2 id="formAlertTitle">Please enter your details to get started</h2>
+        <section id="formAlertMsg">Name and date of birth are required.</section>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
