@@ -136,6 +136,16 @@ function validateForm() {
 
 
 function saveUserData() {
+    console.log('saveUserData called');
+    
+   
+    if (window.isSavingUserData) {
+        console.log('Already saving user data, ignoring duplicate call');
+        return;
+    }
+    
+    window.isSavingUserData = true;
+    
     const name = document.getElementById('userName').value.trim();
     const dob = document.getElementById('userDob').value;
     const age = calculateAge(dob);
@@ -146,27 +156,38 @@ function saveUserData() {
         registrationDate: new Date().toISOString()
     };
     
-    localStorage.setItem('todoUserData', JSON.stringify(userData));
-    
-  
-    showAlert('success', `Great! You are ${age} years old and eligible to use QuickDo.`, 'Age verification passed');
-    
-    
-    const successMessage = document.getElementById('successMessage');
-    successMessage.style.display = 'block';
-    successMessage.style.animation = 'fadeIn 0.5s ease-out';
-    successMessage.textContent = 'Registration successful! Redirecting to app...';
-    
-    const registerBtn = document.getElementById('registerBtn');
-    registerBtn.classList.add('loading');
-    registerBtn.textContent = 'Setting up your account...';
-    
-   
-    setTimeout(() => {
-        window.location.href = 'app.html';
-    }, 2000);
-    
-    console.log('User data saved:', userData);
+    try {
+        localStorage.setItem('todoUserData', JSON.stringify(userData));
+        console.log('User data saved to localStorage');
+        
+        showAlert('success', `Great! You are ${age} years old and eligible to use QuickDo.`, 'Age verification passed');
+        
+        const successMessage = document.getElementById('successMessage');
+        successMessage.style.display = 'block';
+        successMessage.style.animation = 'fadeIn 0.5s ease-out';
+        successMessage.textContent = 'Registration successful! Redirecting to app...';
+        
+        const registerBtn = document.getElementById('registerBtn');
+        registerBtn.classList.add('loading');
+        registerBtn.textContent = 'Setting up your account...';
+      
+        setTimeout(() => {
+            console.log('Redirecting to app.html');
+            try {
+                window.location.href = 'app.html';
+            } catch (error) {
+                console.error('Redirect failed:', error);
+                
+                window.location.replace('app.html');
+            }
+        }, 2000);
+        
+        console.log('User data saved:', userData);
+    } catch (error) {
+        console.error('Error saving user data:', error);
+        window.isSavingUserData = false;
+        showAlert('error', 'Failed to save user data. Please try again.', 'Registration Error');
+    }
 }
 
 
@@ -220,30 +241,31 @@ function addInputValidation() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  
+    console.log('DOM loaded, initializing...');
+    
     checkExistingUser();
     
-  
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('userDob').setAttribute('max', today);
     
-  
     addInputValidation();
     
-  
-    document.getElementById('registerBtn').addEventListener('click', function() {
-        if (validateForm()) {
-            saveUserData();
-        }
-    });
+   
+    const registerBtn = document.getElementById('registerBtn');
+    if (registerBtn) {
+        
+        registerBtn.removeEventListener('click', handleRegisterClick);
+        registerBtn.addEventListener('click', handleRegisterClick);
+        console.log('Register button event listener added');
+    }
     
   
-    document.getElementById('registrationForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (validateForm()) {
-            saveUserData();
-        }
-    });
+    const registrationForm = document.getElementById('registrationForm');
+    if (registrationForm) {
+        registrationForm.removeEventListener('submit', handleFormSubmit);
+        registrationForm.addEventListener('submit', handleFormSubmit);
+        console.log('Form submit event listener added');
+    }
     
   
     document.querySelectorAll('input').forEach(input => {
@@ -252,6 +274,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+function handleRegisterClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Register button clicked');
+    
+   
+    const registerBtn = document.getElementById('registerBtn');
+    if (registerBtn.classList.contains('loading')) {
+        console.log('Already processing, ignoring click');
+        return;
+    }
+    
+    if (validateForm()) {
+        console.log('Form validation passed, saving user data');
+        saveUserData();
+    } else {
+        console.log('Form validation failed');
+    }
+}
+
+
+function handleFormSubmit(e) {
+    e.preventDefault();
+    console.log('Form submitted');
+    
+    
+    const registerBtn = document.getElementById('registerBtn');
+    if (registerBtn.classList.contains('loading')) {
+        console.log('Already processing, ignoring submit');
+        return;
+    }
+    
+    if (validateForm()) {
+        console.log('Form validation passed, saving user data');
+        saveUserData();
+    } else {
+        console.log('Form validation failed');
+    }
+}
 
 
 function toggleTheme() {
