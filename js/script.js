@@ -125,9 +125,6 @@ function validateForm() {
             ageError.style.animation = 'shake 0.5s ease-in-out';
             showAlert('error', `You are ${age} years old. You must be at least 10 years old to use this application.`, 'Age verification failed');
             isValid = false;
-        } else {
-         
-            showAlert('success', `Great! You are ${age} years old and eligible to use Taskify.`, 'Age verification passed');
         }
     }
     
@@ -141,6 +138,7 @@ function validateForm() {
 function saveUserData() {
     const name = document.getElementById('userName').value.trim();
     const dob = document.getElementById('userDob').value;
+    const age = calculateAge(dob);
     
     const userData = {
         name: name,
@@ -150,13 +148,15 @@ function saveUserData() {
     
     localStorage.setItem('todoUserData', JSON.stringify(userData));
     
+  
+    showAlert('success', `Great! You are ${age} years old and eligible to use QuickDo.`, 'Age verification passed');
+    
     
     const successMessage = document.getElementById('successMessage');
     successMessage.style.display = 'block';
     successMessage.style.animation = 'fadeIn 0.5s ease-out';
     successMessage.textContent = 'Registration successful! Redirecting to app...';
     
-   
     const registerBtn = document.getElementById('registerBtn');
     registerBtn.classList.add('loading');
     registerBtn.textContent = 'Setting up your account...';
@@ -164,7 +164,7 @@ function saveUserData() {
    
     setTimeout(() => {
         window.location.href = 'app.html';
-    }, 1500);
+    }, 2000);
     
     console.log('User data saved:', userData);
 }
